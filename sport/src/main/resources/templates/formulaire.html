@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr" layout:decorate="~{layout}">
+
+<head>
+    <title layout:fragment="title">ESI-Sports</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <div class="container">
+            <h1 class="display-4">Réservation</h1>
+            <form sec:authorize="isAuthenticated()" th:action="@{/salles/insertReservation}" method="post"
+                th:object="${formulaireDto}">
+                <div class="m-auto w-50 t-500">
+                    <div th:each="sport : ${sports}">
+                        <label for="title" th:text="${sport.name}"></label>
+                        <input type="radio" name="agree" th:value="${sport.name}" th:field="*{sportName}" th:errorclass="errorField">
+                        <span th:errors="*{sportName}" class="errorMsg text-danger">erreur</span>
+                    </div>
+                    <br>
+                    <label for="date">Date</label>
+                    <input type="date" name="dateChooseen" id="minimumDay" th:field="*{date}"
+                        th:errorclass="errorField">
+                    <span th:errors="*{date}" class="errorMsg text-danger">erreur</span>
+                    <br>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" th:field="*{email}" th:errorclass="errorField">
+                    <span th:errors="*{email}" class="errorMsg text-danger">erreur</span>
+                    <button class="btn btn-primary" type="submit">Ajouter</button>
+                </div>
+            </form>
+            <a class="btn btn-primary" type="button" th:href="@{/formulaire}">Reset</a>
+            <h2 th:if="${isInsertedAllowed != null}">Le sport n'est pas praticable pour la date donnée</h2>
+        </div>
+    </main>
+</body>
+<script>
+    $(document).ready(function () {
+        document.getElementById("minimumDay").min = currentDate.getDate() + 1
+    })
+</script>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr" layout:decorate="~{layout}">
+
+<head>
+    <title layout:fragment="title">ESI-Sports</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <div class="container">
+            <h1 class="display-4" th:text="|${roomDetails.code} - ${roomDetails.name}|"></h1>
+        </div>
+        <div>Sports : </div><br>
+        <ul class="list-group" th:each="sport : ${roomDetails.sports}">
+            <li class="list-group-item list-group-item-primary" th:text="${sport.name}"></li>
+            <li class="list-group-item list-group-item-light-" th:text="|description : ${sport.description}|"></li>
+        </ul>
+        <br><br><br>
+        <div>Réservations : </div><br>
+        <ul class="list-group" th:each="reservation : ${roomDetails.reservations}">
+            <li class="list-group-item list-group-item-primary" th:text="${reservation.id}"></li>
+            <li class="list-group-item list-group-item-primary" th:text="${reservation.email}"></li>
+            <li class="list-group-item list-group-item-primary" th:text="${reservation.day}"></li>
+            <br>
+        </ul>
+    </main>
+</body>
+
+</html>

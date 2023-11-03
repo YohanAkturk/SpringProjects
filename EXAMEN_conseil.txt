@@ -1,5 +1,0 @@
-si je bloque sur la requête JPQL => je dois passer à la question suivante danslaquelle on dmd tjr d'afficher un truc depuis une simple requête findAll().
-Du coup avancer sur la suite, jusqu'au service web. Pour le service web, essayez de débloquer la requpete JPQL car on nous demande de l'afficher en JSON. I ça va pas => passer à l'étape suivante qui est la sécurité.
-
-ATTENTION : les dtos c'est des Long et non des int mm si l'entité c'est un Int !!! => c'est faux cque g dis ===> le type que je mets dans l'entité ça sera ce type que je dois réutiliser dans le dto.
-Subtilité : Moi j'avais mis int dans l'entité et donc ds dto int il le prennait pas, ça le convertissait en Long ===> du coup ds l'entité je dois bien mettre Integer.

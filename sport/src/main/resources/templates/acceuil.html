@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr" layout:decorate="~{layout}">
+
+<head>
+    <title layout:fragment="title">ESI-Sports</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <div class="container">
+            <h1 class="display-4">Liste des salles</h1>
+        </div>
+        <div th:each="room : ${rooms}">
+            <a th:href="@{/salles/{roomName}(roomName=${room.name})}" th:text="${room.name}"></a>
+            <ul class="list-group" th:each="sport : ${room.sports}">
+                <li class="list-group-item list-group-item-primary" th:text="${sport.name}"></li>
+            </ul>
+            <br>
+        </div>
+    </main>
+</body>
+
+</html>
