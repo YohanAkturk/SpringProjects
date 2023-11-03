@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xlmns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <h1 class="text-center mb-4 mt-2 text-primary">Liste des cours</h1>
+        <div class="m-auto w-50">
+            <table th:if="${courses.isEmpty()} == false" class="table table-primary table-striped table-bordered"
+                border=2>
+                <tr>
+                    <th th:text="#{acronymCourse}"></th>
+                    <th th:text="#{titleCourse}"></th>
+                    <th>ECTS</th>
+                </tr>
+                <tr th:each="course : ${courses}">
+                    <td><a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.id}"></a></td>
+                    <td><div th:text="${course.libelle}"></td>
+                    <td th:text="${course.ects}"></td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${courses.isEmpty()} == true" class="text-center mb-4 mt-2 text-danger">Aucun cours</div>
+
+        <form th:action="@{/courses/addCourse}" th:object="${course}" method="post" sec:authorize="hasAuthority('SECRETAIRE')">
+            <div class="m-auto w-50 t-500">
+                <table>
+                    <tr>
+                        <th>id :</th>
+                        <td>
+                            <label for="sigle"></label>
+                            <input type="text" id="sigle" placeholder="id..." th:field="*{id}"
+                                th:errorclass="errorField">
+                            <span th:errors="*{id}" class="errorMsg text-danger">erreur</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>libelle :</th>
+                        <td>
+                            <label for="libelle"></label>
+                            <input type="text" id="libelle" placeholder="libelle..." th:field="*{libelle}"
+                                th:errorclass="errorField">
+                            <span th:errors="*{libelle}" class="errorMsg text-danger">erreur</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>ects :</th>
+                        <td>
+                            <label for="ects"></label>
+                            <input type="number" id="ects" placeholder="ects..." th:field="*{ects}"
+                                th:errorclass="errorField">
+                            <span th:errors="*{ects}" class="errorMsg text-danger">erreur</span>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit">Ajouter</button>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

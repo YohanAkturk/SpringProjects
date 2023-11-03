@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xlmns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>etudiantCourses</title>
+</head>
+
+<body>
+
+    <main layout:fragment="content">
+        <h1 class="text-center mb-4 mt-2 text-primary" th:text="${etudiant.matricule + ' - ' + etudiant.nom}"></h1>
+
+        <div class="m-auto w-50">
+            <table th:if="${courses.isEmpty()} == false" class="table table-primary table-striped table-bordered"
+                border=2>
+                <tr>
+                    <th>Sigle</th>
+                    <th>Titre</th>
+                    <th>ECTS</th>
+                </tr>
+                <tr th:each="course : ${courses}">
+                    <td><div th:text="${course.id}"></div></td>
+                    <td><div th:text="${course.libelle}"></div></td>
+                    <td><div th:text="${course.ects}"></div></td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${courses.isEmpty()} == true" class="text-center mb-4 mt-2 text-danger">Aucun étudiant</div>
+    </main>
+
+</body>
+
+</html>

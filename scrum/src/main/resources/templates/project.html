@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr" layout:decorate="~{layout}">
+
+<head>
+    <title layout:fragment="title">Index de la gestion des dépôts</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+
+        <div class="container">
+            <div class="page-header">
+                <h1 class="display-4" th:text="${projectName}"></h1>
+            </div>
+        </div>
+        <table class="table table-primary table-striped table-bordered" border=2>
+            <tr>
+                <th>Title</th>
+                <th>Number</th>
+                <th>Estimated points</th>
+            </tr>
+            <tr th:each="story : ${stories}">
+                <td th:text="${story.title}"></td>
+                <td th:text="${story.sprint.number}"></td>
+                <td th:text="${story.estimate}"></td>
+            </tr>
+        </table>
+
+        <a th:if="${isAdmin} == true" class="btn btn-primary" th:href="@{/projects/{name}/formulaire(name=${projectName})}">Add story</a>
+    </main>
+</body>
+
+</html>

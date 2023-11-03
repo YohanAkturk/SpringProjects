@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xlmns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etudiants</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <h1 class="text-center mb-4 mt-2 text-primary">Liste des étudiants</h1>
+        <div th:text="${role}"></div>
+        <form th:action="@{/etudiants/getEtudiantsWithName}" method="post">
+            <div class="m-auto w-50 t-500">
+                <table>
+                    <tr>
+                        <th>Recherche par nom : </th>
+                        <td>
+                            <label for="nom"></label>
+                            <input type="text" id="nom" placeholder="Nom de l'étudiant..." name="nom">
+                            <!-- ATTENTION, AVEC NAME, je peux ainsi ds le paramètre de la méthode du controller, récupérer ce que l'user aura mis ici. DANS le controller, ça s'appelera matricule. !!! -->
+                            <button type="submit">Filter</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+        <div class="m-auto w-50">
+            <table th:if="${etudiants.isEmpty()} == false" class="table table-primary table-striped table-bordered"
+                border=2>
+                <tr>
+                    <th>Matricule</th>
+                    <th>Nom</th>
+                    <th>Genre</th>
+                    <th>Section</th>
+                </tr>
+                <tr th:each="etudiant : ${etudiants}">
+                    <td th:text="${etudiant.matricule}"></td>
+                    <td><a th:href="@{/etudiants/{id}(id=${etudiant.matricule})}" th:text="${etudiant.nom}"></a>
+                    </td>
+                    <td th:text="${etudiant.genre}"></td>
+                    <td th:text="${etudiant.section}"></td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${etudiants.isEmpty()} == true" class="text-center mb-4 mt-2 text-danger">Aucun étudiants</div>
+
+        <form th:action="@{/etudiants/addEtudiant}" th:object="${etudiant}" method="post" sec:authorize="hasAuthority('SECRETAIRE')">
+            <div class="m-auto w-50 t-500">
+                <table>
+                    <tr>
+                        <th>Nom : </th>
+                        <td>
+                            <label for="nom"></label>
+                            <input type="text" id="nom" placeholder="Nom de l'étudiant..." th:field="*{nom}"
+                                th:errorclass="errorField">
+                            <span th:errors="*{nom}" class="errorMsg text-danger">erreur</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Genre : </th>
+                        <td>
+                            <input type="radio" id="M" name="genre" value="M" th:errorclass="errorField">
+                            <span th:errors="*{genre}" class="errorMsg text-danger">erreur</span>
+                            <label for="genre">M</label>
+                            <input type="radio" id="F" name="genre" value="F" th:errorclass="errorField">
+                            <span th:errors="*{genre}" class="errorMsg text-danger">erreur</span>
+                            <label for="genre">F</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Section : </th>
+                        <td>
+                            <input type="radio" id="GESTION" name="section" value="GESTION" th:errorclass="errorField">
+                            <span th:errors="*{section}" class="errorMsg text-danger">erreur</span>
+                            <label for="section">Gestion</label>
+                            <input type="radio" id="INDUSTRIELLE" name="section" value="INDUSTRIELLE"
+                                th:errorclass="errorField">
+                            <span th:errors="*{section}" class="errorMsg text-danger">erreur</span>
+                            <label for="section">Industrielle</label>
+                            <input type="radio" id="RESEAU" name="section" value="RESEAU" th:errorclass="errorField">
+                            <span th:errors="*{section}" class="errorMsg text-danger">erreur</span>
+                            <label for="section">Réseau</label>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit">Ajouter</button>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

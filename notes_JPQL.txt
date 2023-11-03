@@ -1,0 +1,32 @@
+1er truc)
+qd dans une requête JPQL je fais select d'1 attribut => il faut que la fonction qui utilise cet requête query return List<Object>
+
+qd dans une requête JPQL je fais select de + que 1 attributs => il faut que la fonction qui utilise cet requête query return List<Object[]>
+
+ATTENTION: faire @Positive et non @Min
+
+exemple, ici la requête fait un select de 2 attributs, donc pour les afficher faut elt[0] et elt[1]:
+        // Test JPQL query noms + nbEcts
+        // List<Object[]> recs = etudiantDB.getNomEtEcts();
+        // System.out.println("HELOff => " + recs);
+        // for (Object[] elt : recs) {
+        // System.out.println("elt : " + elt[0]);
+        // System.out.println("elt : " + elt[1]);
+        // }
+
+
+2ème truc)
+qd je fais une condition avec un aggrégat, genre having sum(nb) > :nb
+=> il faut que le paramètre nb soit du type Long !!!
+avec une condition simple, le paramètre du type int est accepté
+
+ATTENTION EXAMEN BLANC :
+Avec des ManyToOne, on peut parcourir ces "tables" juste en accédant à l'attribut qui fait le lien du ManyToOne.
+===> pour accéder à l'attribut name de Project depuis Story, on fait Story st.sprint.project.name.
+
+
+Qd ils nous disent ça peut pas être vide ===> NotBlank !!!
+et mettre les messages d'erreur qd c'est > 0 ===> Positif
+
+
+ATTention : pas faire de sout dans les classes du dossier business.

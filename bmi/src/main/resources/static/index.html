@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xlmns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>Calcul IMC</h1>
+    <p>Entrez vos informations</p>
+    <input type="radio" name="genre" value="man" checked>Homme
+    <input type="radio" name="genre" value="woman">Femme<br>
+    Votre taille (en cm) : <input id="taille" name="177" size="10"><br>
+    Votre poids (en kg) : <input id="poids" value="69" size="10"><br>
+    <button type="button" id="compute" onclick="calculate()">Calculer</button><br>
+    <br>
+    Votr IMC = <span id="imc"></span><br>
+    Votre corpulence = <span id="corpulence"></span>
+</body>
+
+</html>
+
+<script>
+    function calculate() {
+        var poids = $("#poids").val();
+        var taille = $("#taille").val();
+        var genre = $("input[name=genre]:checked").val();
+        $.get(`http://localhost:8080/api/bmi?weight=${poids}&height=${taille}&gender=${genre}`, function (data,
+        status) {
+            $("#imc").text(data.bmi);
+            $("#corpulence").text(data.corpulence);
+        });
+    }
+</script>

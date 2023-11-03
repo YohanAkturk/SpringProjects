@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" layout:decorate="~{layout}">
+
+<head>
+    <title layout:fragment="title">Index de la gestion des dépôts</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+
+        <div class="container">
+            <div class="page-header">
+                <h1 class="display-4">Detail</h1>
+            </div>
+            <h2 class="display-7" th:text="${questionText}"></h2>
+            <table class="table table-primary table-striped table-bordered mx-auto" border=2>
+                <tr>
+                    <th>Date added</th>
+                    <th>State</th>
+                </tr>
+                <tr th:each="answer : ${answers}">
+                    <td th:text="${answer.dateAdded}"></td>
+                    <td th:text="${answer.agree}"></td>
+                </tr>
+            </table>
+            <form th:action="@{/questions/{id}/addAnswer(id=${questionText})}" method="post">
+                <div class="m-auto w-50 t-500">
+                    <input type="radio" name="terms" id="terms-yes" value="true">
+                    <label for="terms-yes">True</label>
+                    <input type="radio" name="terms" id="terms-no" value="false">
+                    <label for="terms-no">False</label>
+                    <!-- ATTENTION, AVEC NAME, je peux ainsi ds le paramètre de la méthode du controller, récupérer ce que l'user aura mis ici. DANS le controller, ça s'appelera matricule. !!! -->
+                    <button class="btn btn-primary" type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

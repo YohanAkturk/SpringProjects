@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xlmns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <button><a href="/courses">go to courses</a></button>
+        <button type="button" id="submitBtn" onclick="handleClick()">go to courses with rest</button>
+        <select name="courses" id="coursesListDeroulante" onchange="handleClickSelected()">
+            <option id="choose" value="choose">---choose</option>
+            <option th:each="course : ${courses}" value="${course.libelle}" th:text="${course.libelle}">
+            </option>
+        </select>
+        <ul id="displayCourses"></ul>
+    </main>
+</body>
+
+</html>
+
+<script>
+    function handleClick() {
+        $.get('/api', {},
+            function (data, status) {
+                //console.log(status)
+                //console.log(data)
+                for (let i = 0; i < data.length; i++) {
+                    $("#displayCourses").append(
+                        `<li>${data[i].id}</li><li>${data[i].libelle}</li><li>${data[i].ects}</li><br>`)
+                }
+            });
+    }
+
+    function handleClickSelected() {
+        var select = document.getElementById('coursesListDeroulante');
+        var text = select.options[select.selectedIndex].text;
+        console.log(text);
+        if (text != "---choose") {
+            $.post(`/api/${text}`, {},
+                function (data, status) {
+                    console.log(status)
+                    console.log(data[0].id)
+                    //avec ce if, on est pas en asynchrone mais on rarfraîchit la page.
+                    if (status == 'success') {
+                        for (let i = 0; i < data.length; i++) {
+                            $("#displayCourses").append(
+                                `<li>${data[i].id}</li><li>${data[i].libelle}</li><li>${data[i].ects}</li><br>`)
+                        }
+                    }
+                });
+        }
+    }
+</script>

@@ -1,0 +1,3 @@
+insert into Course(id, libelle, ects) values('INT1', 'Introductions', 10), ('MAT1', 'Mathématiques II', 3), ('CAI1', 'Anglais I', 2), ('DEV1', 'Développement I', 10), ('DEV2', 'Développement II', 10), ('WEBG2', 'Développement web I', 5);
+insert into Etudiant(matricule, nom, genre, section) values(6, 'Dracaufeu', 0, 1), (19, 'Rattata', 0, 0), (25, 'Pikachu', 1, 0), (39, 'Roudoudou', 1, 1), (309, 'Dynavolt', 0, 1), (378, 'Regice', 0, 2), (391, 'fddfds', 1, 1);
+insert into COURSE_ETUDIANTS(COURSES_ID, ETUDIANTS_MATRICULE) values('INT1', 6), ('INT1', 19), ('DEV1', 19);
